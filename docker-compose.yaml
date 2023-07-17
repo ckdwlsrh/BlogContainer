@@ -1,7 +1,32 @@
 version: '3'
 
 services:
-  react:
+  react-front-app:
+    stdin_open: true
+    tty: true
 
-  springboot:
+    build:
+      context: ${PWD}/frontend-myblog-app
+      dockerfile: ${PWD}/frontend-myblog-app/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ${PWD}/frontend-myblog-app/src:/app/src:ro
   
+  spring-boot-back-app:
+    build:
+      context: ${PWD}/backend
+      dockerfile: ${PWD}/backend/Dockerfile
+      args:
+        JAR_FILE: 'build/libs/*.jar'
+    ports:
+      - "8080:8080"
+  db:
+    image: 'mysql:5.7'
+    environment:
+      - 'MYSQL_DATABASE=aiddoru'
+      - 'MYSQL_PASSWORD=3044'
+      - 'MYSQL_ROOT_PASSWORD=3044'
+      - 'MYSQL_USER=ckdwls6504'
+    ports:
+      - '3306:3306'
