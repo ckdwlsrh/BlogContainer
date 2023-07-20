@@ -13,6 +13,7 @@ import com.myblog.backend.Persistence.NaverNewsRepository;
 
 @Service
 public class NewsService {
+    
     @Autowired
     private NaverNewsRepository naverNewsRepository;
 
